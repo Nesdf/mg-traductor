@@ -1,0 +1,16 @@
+{
+    "name": "MgTraductor",
+    "alias": "mgtraductor",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\MgTraductor\\Providers\\MgTraductorServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
