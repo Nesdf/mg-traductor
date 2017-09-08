@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
 			'ap_materno' => 'Sanchez',
 			'password' => \Hash::make( '123456' ),
 			'email' => 'nes64df@gmail.com',
+			'add_frases' => true,
 			'created_at' => $carbon->now()->format('Y-m-d H:i:s'),
 			'updated_at' => $carbon->now()->format('Y-m-d H:i:s')
 		]);
@@ -29,6 +30,7 @@ class UsersTableSeeder extends Seeder
 			'ap_materno' => '',
 			'password' => \Hash::make( '123456' ),
 			'email' => 'jesus@macias-group.com',
+			'add_frases' => true,
 			'created_at' => $carbon->now()->format('Y-m-d H:i:s'),
 			'updated_at' => $carbon->now()->format('Y-m-d H:i:s')
 		]);
