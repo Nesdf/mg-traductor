@@ -19,7 +19,16 @@ class UsersTableSeeder extends Seeder
 			'ap_materno' => 'Sanchez',
 			'password' => \Hash::make( '123456' ),
 			'email' => 'nes64df@gmail.com',
-			'job' => 'Director',
+			'created_at' => $carbon->now()->format('Y-m-d H:i:s'),
+			'updated_at' => $carbon->now()->format('Y-m-d H:i:s')
+		]);
+
+		DB::table('users')->insert([
+			'name' => 'Jesús',
+			'ap_paterno' => 'Pacheco',
+			'ap_materno' => '',
+			'password' => \Hash::make( '123456' ),
+			'email' => 'jesus@macias-group.com',
 			'created_at' => $carbon->now()->format('Y-m-d H:i:s'),
 			'updated_at' => $carbon->now()->format('Y-m-d H:i:s')
 		]);
