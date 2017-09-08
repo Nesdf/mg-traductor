@@ -39,8 +39,8 @@
 					<!-- div.table-responsive -->
 
 					<!-- div.dataTables_borderWrap -->
-					<div>
-						<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+					<div><br><br>
+						<table id="table_frases" class="stripe row-border">
 							<thead>
 								<tr>
 									<th>ID</th>
@@ -183,6 +183,23 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
+		$('#table_frases').DataTable({
+			language: {
+				search:   "Buscar: ",
+	            lengthMenu: "Mostrar _MENU_ registros por página",
+	            zeroRecords: "No se encontraron registros",
+	            info: "Página _PAGE_ de _PAGES_",
+	            infoEmpty: "Se buscó en",
+	            infoFiltered: "(_MAX_ registros)",
+	            paginate: {
+	                first:      "Primero",
+	                previous:   "Previo",
+	                next:       "Siguiente",
+	                last:       "Anterior"
+        		},
+	        }
+		});
+
 		$('#form_create_frase').on('submit', function(event){
 			event.preventDefault();
 			$.ajax({

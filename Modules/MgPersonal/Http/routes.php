@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'mgpersonal', 'namespace' => 'Modules\MgPersonal\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'auth','adminfrases'], 'prefix' => 'mgpersonal', 'namespace' => 'Modules\MgPersonal\Http\Controllers'], function()
 {
     Route::get('/', 'MgPersonalController@index');//Cargar el listado
 	Route::post('/save-persona', 'MgPersonalController@store');//Crear 

@@ -1,8 +1,8 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'mgtraductor', 'namespace' => 'Modules\MgTraductor\Http\Controllers'], function()
+Route::group(['middleware' => ['web', 'auth', 'adminfrases'], 'prefix' => 'mgtraductor', 'namespace' => 'Modules\MgTraductor\Http\Controllers'], function()
 {
-    Route::get('/', 'MgTraductorController@index');
+    #Route::get('/', 'MgTraductorController@index');
     Route::get('/frases-ingles', 'AgregarFrasesEnInglesController@listFrases');
     Route::post('/save', 'AgregarFrasesEnInglesController@store');
     Route::get('/resultado', 'AgregarFrasesEnInglesController@resultado');
@@ -15,4 +15,13 @@ Route::group(['middleware' => 'web', 'prefix' => 'mgtraductor', 'namespace' => '
     Route::post('/update_frase_espanol', 'AgregarFrasesEnEspanolController@update');
     Route::get('/delete_frase_espanol/{id}', 'AgregarFrasesEnEspanolController@destroy');
     Route::get('/edit_frase_espanol/{id}', 'AgregarFrasesEnEspanolController@edit');
+    
+});
+
+
+Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'mgtraductor', 'namespace' => 'Modules\MgTraductor\Http\Controllers'], function()
+{
+    Route::get('/', 'MgTraductorController@index');    
+    Route::post('/list_traduccion', 'AgregarFrasesEnEspanolController@listTraduccion');
+    #Route::get('/get_frases_espanol', 'AgregarFrasesEnEspanolController@getFrasesEspanol');
 });

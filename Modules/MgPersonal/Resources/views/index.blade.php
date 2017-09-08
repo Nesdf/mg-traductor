@@ -40,15 +40,15 @@
 					<!-- div.table-responsive -->
 
 					<!-- div.dataTables_borderWrap -->
-					<div>
-						<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+					<div><br><br>
+						<table id="table_personal" class="stripe row-border">
 							<thead>
 								<tr>
 									<th>ID</th>
 									<th>Nombre(s)</th>
 									<th>Apellido(s)</th>
 									<th class="hidden-480">Correo</th>
-									<th></th>
+									<th>Acciones</th>
 								</tr>
 							</thead>
 
@@ -124,14 +124,9 @@
 						<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputEmail1">Selecciona el puesto</label>
-						<select class="form-control" id="puesto" name="puesto">
-							<option select value="">Seleccionar</option>
-							@foreach($puestos as $puesto)
-								<option value="{{ $puesto->job }}"> {{ $puesto->job }} </option>
-							@endforeach
-						</select>
-					</div>				
+						<input type="checkbox"  name="add_frases"> &nbsp; &nbsp;
+						<label for="add_frases">Permiso para adminisitrar frases</label>
+					</div>
 			  </div>
 			  <div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
@@ -178,15 +173,9 @@
 						<input type="password" class="form-control" id="password_update" name="password" placeholder="Contraseña">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputEmail1">Selecciona el puesto</label>
-						<select class="form-control" id="puesto_update" name="puesto">
-							<option select value="">Seleccionar</option>
-							@foreach($puestos as $puesto)
-								<option value="{{ $puesto->id }}"> {{ $puesto->job }} </option>
-							@endforeach
-						</select>
-					</div>				
-			  </div>
+						<input type="checkbox"  name="add_frases_update" id="add_frases_update"> &nbsp; &nbsp;
+						<label for="add_frases_update">Permiso para adminisitrar frases</label>
+					</div>
 			  <div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
 				<button type="submit" class="btn btn-primary">Guardar</button>
@@ -224,13 +213,22 @@
 @section('script')
 	<script>
 		$(document).on('ready', function(){
-			$('#modal_delete_personal').on('shown.bs.modal', function () {
-			  //$('#myInput').focus()
-			  //$( this ).data( 'id' );
-			  
-			  console.log( $( this ) );
-			 
-			})	
+			$('#table_personal').DataTable({
+				language: {
+					search:   "Buscar: ",
+		            lengthMenu: "Mostrar _MENU_ registros por página",
+		            zeroRecords: "No se encontraron registros",
+		            info: "Página _PAGE_ de _PAGES_",
+		            infoEmpty: "Se buscó en",
+		            infoFiltered: "(_MAX_ registros)",
+		            paginate: {
+		                first:      "Primero",
+		                previous:   "Previo",
+		                next:       "Siguiente",
+		                last:       "Anterior"
+            		},
+		        }
+			});
 			
 			$('.update_id').on('click', function(){
 				 id = $( this ).data('id');				
@@ -244,8 +242,11 @@
 						$('#ap_paterno_update').val(data.ap_paterno);
 						$('#ap_materno_update').val(data.ap_materno);
 						$('#correo_update').val(data.email);
-						$('#nombre_update').val(data.name);
-						$("#puesto_update option[value="+ data.job +"]").attr("selected",true);		
+						$('#nombre_update').val(data.name);	
+						console.log(data.add_frases);
+						if(data.add_frases == true){
+							$( "#add_frases_update" ).prop( "checked", true );
+						}
 						
 					}
 				});

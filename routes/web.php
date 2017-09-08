@@ -29,6 +29,3 @@ Route::get('/', function(){
 	return redirect('login');
 });
 
-Route::get('/passw', function(){
-	return \Hash::make( '1234567890' );
-});

@@ -14,8 +14,7 @@
 			
 			<div class="row">
 				<div class="col-xs-12">
-					<h3 class="header smaller lighter blue">Traducción al Español</h3>
-
+					<h3 class="header smaller lighter blue">Traducción al Español &nbsp; &nbsp; <a href="{{url('mgtraductor')}}" class="label label-info" href="">Limpiar texto</a></h3>
 					<div class="clearfix">
 						<div class="pull-right tableTools-container"></div>
 						@if (Session::has('message'))
@@ -29,18 +28,19 @@
 							</div>
 							
 						@endif
-					</div>
+					</div>					
 					<div class="table-header"></div>
-
-					<form>
-						<textarea></textarea>
+					<form role="form" id="form_traductor">
+						{{ csrf_field() }}
+						<textarea name="texto_ingles" id="texto1" rows="15"></textarea>	<br>					
+						<button type="submit" class="btn btn-primary">Doble click para traducir </button>
 					</form>
-
 					<!-- div.table-responsive -->
 
 					<!-- div.dataTables_borderWrap -->
 					<div>
-						<!-- Agregar wygwys  -->
+						<!-- Agregar wygwys  --><br><br>
+						<div id="texto_traducido"></div>
 					</div>
 				</div>
 			</div>		
@@ -81,20 +81,37 @@
 @stop
 
 @section('script')
-	<script>
-		tinymce.init({
-		  selector: 'textarea',
-		  height: 500,
-		  menubar: false,
-		  plugins: [
-		    'advlist autolink lists link image charmap print preview anchor',
-		    'searchreplace visualblocks code fullscreen',
-		    'insertdatetime media table contextmenu paste code'
-		  ],
-		  toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-		  content_css: [
-		    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-		    '//www.tinymce.com/css/codepen.min.css']
-		});
+	<script type="text/javascript">
+
+		$(document).on('ready', function(){
+
+	  	tinymce.init({ selector:'textarea#texto1' });
+
+
+			$('#form_traductor').on('submit', function(event){
+				event.preventDefault();
+				$.ajax({
+					url: "{{ url('mgtraductor/list_traduccion') }}",
+					type: "POST",
+					data: $( this ).serialize(),
+					success: function( data ){
+						
+						
+						$('#texto_traducido').html('<div class="label label-success"> Doble click a la frase subrayadas para mostrar las traducciones en el idioma español. </div><textarea id="texto2" rows="15">'+data['texto']+'</textarea>');	
+						tinymce.init({ selector:'textarea#texto2' });
+						// Permite mostrar boto de traducción
+						$('span').on('click', function(){
+			            	console.log($(this).attr('id'));
+			            	$('#'+$(this).attr('id')).popover({
+			            		html: true,
+			            	});
+			            });				
+					}					
+				});
+			});
+				//Permite
+            //CKEDITOR.replace( 'editor1' );
+
+		});		
 	</script>
 @stop

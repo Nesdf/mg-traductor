@@ -16,8 +16,7 @@ class MgPersonalController extends Controller
     public function index()
     {
 		$personas = \Modules\MgPersonal\Entities\User::get();
-		$puestos = \Modules\MgPersonal\Entities\Jobs::get();
-        return view('mgpersonal::index', compact('personas', 'puestos'));
+        return view('mgpersonal::index', compact('personas'));
     }
 
     /**
@@ -42,8 +41,7 @@ class MgPersonalController extends Controller
 				'nombre' => 'required|min:2|max:50',
 				'ap_paterno' => 'required|min:2|max:50',
 				'correo' => 'required|email',
-				'password' => 'required',
-				'puesto' => 'required'
+				'password' => 'required'
 				
 			];
 			
@@ -56,8 +54,7 @@ class MgPersonalController extends Controller
 				'ap_paterno.max' => trans('mgpersonal::ui.display.error_max50', ['attribute' => trans('mgpersonal::ui.attribute.ap_paterno')]),
 				'correo.required' => trans('mgpersonal::ui.display.error_required', ['attribute' => trans('mgpersonal::ui.attribute.correo')]),
 				'correo.email' => trans('mgpersonal::ui.display.error_email', ['attribute' => trans('mgpersonal::ui.attribute.correo')]),
-				'password.required' => trans('mgpersonal::ui.display.error_required', ['attribute' => trans('mgpersonal::ui.attribute.password')]),
-				'puesto.required' => trans('mgpersonal::ui.display.error_required', ['attribute' => trans('mgpersonal::ui.attribute.puesto')])
+				'password.required' => trans('mgpersonal::ui.display.error_required', ['attribute' => trans('mgpersonal::ui.attribute.password')])
 			]; 
 			
 			$validator = \Validator::make($request->all(), $rules, $messages);			
@@ -71,9 +68,9 @@ class MgPersonalController extends Controller
 					'password' => Hash::make( $request->input('password') ),
 					'email' => strtolower( $request->input('correo') ),
 					'name' => ucwords( $request->input('nombre') ),
-					'job' => $request->input('puesto')
+					'add_frases' => ( $request->input('add_frases') == 'on') ? true : false
 				]);
-				$request->session()->flash('message', trans('mgpersonal::ui.flash.flash_create_peronal'));
+				$request->session()->flash('message', trans('mgpersonal::ui.flash.flash_create_personal'));
 				return Response(['msg' => 'success'], 200)->header('Content-Type', 'application/json');
 			}
 		}		
@@ -108,8 +105,7 @@ class MgPersonalController extends Controller
 			$rules = [
 				'nombre' => 'required|min:2|max:50',
 				'ap_paterno' => 'required|min:2|max:50',
-				'correo' => 'required|email',
-				'puesto' => 'required'
+				'correo' => 'required|email'
 				
 			];
 			
@@ -122,7 +118,6 @@ class MgPersonalController extends Controller
 				'ap_paterno.max' => trans('mgpersonal::ui.display.error_max50', ['attribute' => trans('mgpersonal::ui.attribute.ap_paterno')]),
 				'correo.required' => trans('mgpersonal::ui.display.error_required', ['attribute' => trans('mgpersonal::ui.attribute.correo')]),
 				'correo.email' => trans('mgpersonal::ui.display.error_email', ['attribute' => trans('mgpersonal::ui.attribute.correo')]),
-				'puesto.required' => trans('mgpersonal::ui.display.error_required', ['attribute' => trans('mgpersonal::ui.attribute.puesto')])
 			]; 
 			
 			$validator = \Validator::make($request->all(), $rules, $messages);			
@@ -137,9 +132,9 @@ class MgPersonalController extends Controller
 						'password' => Hash::make( $request->input('password') ),
 						'email' => strtolower( $request->input('correo') ),
 						'name' => ucwords( $request->input('nombre') ),
-						'job' => $request->input('puesto')
+						'add_frases' => ( $request->input('add_frases') == 'on') ? true : false
 				]);
-				$request->session()->flash('message', trans('mgpersonal::ui.flash.flash_create_peronal'));
+				$request->session()->flash('message', trans('mgpersonal::ui.flash.flash_create_personal'));
 				return Response(['msg' => 'success'], 200)->header('Content-Type', 'application/json');
 			}
 		}		
@@ -152,7 +147,7 @@ class MgPersonalController extends Controller
     public function destroy($id)
     {
 		\Modules\MgPersonal\Entities\User::destroy($id);
-		\Request::session()->flash('message', trans('mgpersonal::ui.flash.flash_delete_peronal'));
+		\Request::session()->flash('message', trans('mgpersonal::ui.flash.flash_delete_personal'));
 		return redirect('mgpersonal');
     }
 }

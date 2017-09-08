@@ -27,6 +27,7 @@
 		<link rel="stylesheet" href="{{ asset('assets/dashboard/css/ace-rtl.min.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/calendario/jquery-ui.min.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/macias_group/css/mg.css') }}" />
+		<link rel="stylesheet" href="{{ asset('assets/datatable/media/css/jquery.dataTables.min.css') }}" />
 
 		<!--[if lte IE 9]>
 		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
@@ -142,14 +143,16 @@
 				</div><!-- /.sidebar-shortcuts -->			
 
 				<ul class="nav nav-list">
-					<li class="">
-						<a href="{{ url('mgpersonal') }}">
-							<i class="menu-icon fa fa-child"></i>
-							<span class="menu-text"> Personal </span>
-						</a>
+					@if( \Auth::User()->add_frases == true)
+						<li class="">
+							<a href="{{ url('mgpersonal') }}">
+								<i class="menu-icon fa fa-child"></i>
+								<span class="menu-text"> Personal </span>
+							</a>
 
-						<b class="arrow"></b>
-					</li>
+							<b class="arrow"></b>
+						</li>
+					@endif
 					<li class="">
 						<a href="{{ url('mgtraductor') }}">
 							<i class="menu-icon fa fa-comment-o"></i>
@@ -158,14 +161,16 @@
 
 						<b class="arrow"></b>
 					</li>
-					<li class="">
-						<a href="{{ url('mgtraductor/frases-ingles') }}">
-							<i class="menu-icon fa fa-comments-o"></i>
-							<span class="menu-text"> Frases en inglés </span>
-						</a>
+					@if( \Auth::User()->add_frases == true)
+						<li class="">
+							<a href="{{ url('mgtraductor/frases-ingles') }}">
+								<i class="menu-icon fa fa-comments-o"></i>
+								<span class="menu-text"> Frases en inglés </span>
+							</a>
 
-						<b class="arrow"></b>
-					</li>
+							<b class="arrow"></b>
+						</li>
+					@endif
 				</ul><!-- /.nav-list -->
 
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
@@ -188,10 +193,6 @@
 
 					<div class="page-content">
 						<div class="ace-settings-container" id="ace-settings-container">
-							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-								<i class="ace-icon fa fa-cog bigger-130"></i>
-							</div>
-
 							<div class="ace-settings-box clearfix" id="ace-settings-box">
 								<div class="pull-left width-50">
 									<div class="ace-settings-item">
@@ -300,8 +301,9 @@
 		<!-- ace scripts -->
 		<script src="{{ asset('assets/dashboard/js/ace-elements.min.js') }}"></script>
 		<script src="{{ asset('assets/dashboard/js/ace.min.js') }}"></script>
-		<script src="{{ asset('assets/calendario/jquery-ui.min.js') }}"></script>
+		<script src="{{ asset('assets/calendario/jquery-ui.min.js') }}"></script>		
 		<script src="{{ asset('assets/tinymce/tinymce.min.js') }}"></script>
+		<script src="{{ asset('assets/datatable/media/js/jquery.dataTables.min.js') }}"></script>
 
 		<!-- inline scripts related to this page -->
 		@yield('script')

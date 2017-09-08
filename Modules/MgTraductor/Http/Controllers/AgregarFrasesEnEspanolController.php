@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class AgregarFrasesEnEspanolController extends Controller
 {
+    Protected $texto;
     /**
      * Display a listing of the resource.
      * @return Response
@@ -117,9 +118,54 @@ class AgregarFrasesEnEspanolController extends Controller
      * @return Response
      */
     public function destroy($id)
-    {   $id_frase_ingles = \Modules\MgTraductor\Entities\ListaFraseEnEspanol::find($id);
+    {   
+        $id_frase_ingles = \Modules\MgTraductor\Entities\ListaFraseEnEspanol::find($id);
         \Modules\MgTraductor\Entities\ListaFraseEnEspanol::destroy($id);
         \Request::session()->flash('message', trans('mgtraductor::ui.flash.flash_delete_frase'));
         return redirect('mgtraductor/update/'. $id_frase_ingles->frase_ingles_id);
+    }
+
+    public function listTraduccion(Request $request)
+    {
+        $this->texto = $request->input('texto_ingles');        
+        $traduccionDeFrases = \Modules\MgTraductor\Entities\FraseEnIngles::totalDeFrases();
+
+        foreach ($traduccionDeFrases as $key => $value) {
+           #str_replace($value->espanol, $value->ingles, $request->input('texto_ingles'));
+           if($value->total == 1){
+                $array_ingles = array();
+                array_push($array_ingles, strtolower($value->ingles)); // Todas las palabras en minúsculas
+                array_push($array_ingles, strtoupper($value->ingles)); // Todas las palabras en mayusculas
+                array_push($array_ingles, ucwords($value->ingles)); // En mayuscula primer letra 
+                array_push($array_ingles, ucfirst($value->ingles)); // Primer letra de la palabra en mayusculas 
+                $fraseEspanol =  \Modules\MgTraductor\Entities\FraseEnIngles::oneFrase($value->ingles);
+                $this->texto = str_replace($array_ingles, " <span style='background:#CCC'>".$fraseEspanol[0]->espanol." </span>", $this->texto);
+           } else if( $value->total > 1){
+                $array_ingles = array();
+                array_push($array_ingles, strtolower($value->ingles)); // Todas las palabras en minúsculas
+                array_push($array_ingles, strtoupper($value->ingles)); // Todas las palabras en mayusculas
+                array_push($array_ingles, ucwords($value->ingles)); // En mayuscula primer letra 
+                array_push($array_ingles, ucfirst($value->ingles)); // Primer letra de la palabra en mayusculas 
+                $id_frase_ingles = \Modules\MgTraductor\Entities\FraseEnIngles::findFraseIngles($value->ingles);
+                //Convertir arreglo en string
+
+                $frases_en_espanol = null;
+                $num = 0;
+                foreach ($id_frase_ingles as $key2 => $value2) {
+                    $num++;
+                    $frases_en_espanol .=  $num . '. ' . $value2->frase . "<br> ";
+                }
+
+                $this->texto = str_replace($array_ingles, "<span id='" . $id_frase_ingles[0]->id . "'  data-toggle='popover'  data-placement='top' data-content='" . $frases_en_espanol . "'> <u>" . $value->ingles . "</u> </span>", $this->texto);
+           }
+
+        }
+
+        return Response(['msg' => 'success', 'texto' => $this->texto], 200)->header('Content-Type', 'application/json');
+    }
+
+    public function getFrasesEspanol()
+    {
+        return Response(['msg' => 'success'], 200)->header('Content-Type', 'application/json');
     }
 }
