@@ -85,7 +85,14 @@
 
 		$(document).on('ready', function(){
 
-	  	tinymce.init({ selector:'textarea#texto1' });
+	  	tinymce.init({ 
+	  		selector:'textarea#texto1',
+	  		setup: function (editor) {
+		        editor.on('change', function () {
+		            editor.save();
+		        });
+		    }
+	  	});
 
 
 			$('#form_traductor').on('submit', function(event){
@@ -97,8 +104,15 @@
 					success: function( data ){
 						
 						
-						$('#texto_traducido').html('<div class="label label-success"> Doble click a la frase subrayadas para mostrar las traducciones en el idioma español. </div><textarea id="texto2" rows="15">'+data['texto']+'</textarea>');	
-						tinymce.init({ selector:'textarea#texto2' });
+						$('#texto_traducido').html('<div class="label label-success"> Click sobre la frase subrayadas para mostrar las traducciones en el idioma español. </div><br><br><div>'+data['texto']+'</div>');	
+						/*tinymce.init({ 
+							selector:'textarea#texto2',
+							setup: function (editor) {
+						        editor.on('change', function () {
+						            editor.save();
+						        });
+						    }
+			     		});*/
 						// Permite mostrar boto de traducción
 						$('span').on('click', function(){
 			            	console.log($(this).attr('id'));

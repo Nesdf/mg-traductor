@@ -17,7 +17,7 @@ class CreateFrasesEspanolTable extends Migration
         Schema::create('frases_espanol', function (Blueprint $table) {
             $table->increments('id');
             $table->string('frase');
-            $table->string('frase_ingles_id');
+            $table->integer('frase_ingles_id');
             $table->timestamps();
         });
     }

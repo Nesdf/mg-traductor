@@ -44,6 +44,11 @@
 		<script src="{{ asset('assets/dashboard/dashboard/js/html5shiv.min.js') }}"></script>
 		<script src="{{ asset('assets/dashboard/js/respond.min.js') }}"></script>
 		<![endif]-->
+		<style type="text/css">
+			.img-mg{
+				background-image: url("{{url('assets/mg/img/mg.jpg')}}") ;
+			}
+		</style>
 	</head>
 
 	<body class="no-skin">
@@ -191,7 +196,7 @@
 						</ul><!-- /.breadcrumb -->
 					</div>
 
-					<div class="page-content">
+					<div class="page-content img-mg">
 						<div class="ace-settings-container" id="ace-settings-container">
 							<div class="ace-settings-box clearfix" id="ace-settings-box">
 								<div class="pull-left width-50">
