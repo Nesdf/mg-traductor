@@ -173,7 +173,7 @@
 						<input type="password" class="form-control" id="password_update" name="password" placeholder="Contraseña">
 					</div>
 					<div class="form-group">
-						<input type="checkbox"  name="add_frases_update" id="add_frases_update"> &nbsp; &nbsp;
+						<input type="checkbox"  name="add_frases" id="add_frases_update"> &nbsp; &nbsp;
 						<label for="add_frases_update">Permiso para adminisitrar frases</label>
 					</div>
 			  <div class="modal-footer">

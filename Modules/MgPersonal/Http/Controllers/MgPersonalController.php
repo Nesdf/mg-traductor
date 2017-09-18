@@ -125,15 +125,24 @@ class MgPersonalController extends Controller
 			if ( $validator->fails() ) {
 				return Response(['msg' => $validator->errors()->all()], 402)->header('Content-Type', 'application/json');
 			} else {
+				$data = array(
+					'ap_paterno' => ucwords( $request->input('ap_paterno') ),
+					'ap_materno' => ucwords( $request->input('ap_materno') ),
+					'email' => strtolower( $request->input('correo') ),
+					'name' => ucwords( $request->input('nombre') )
+				);
+
+				if( $request->input('password') ){
+					$data['password'] = \Hash::make($request->input('password'));
+				}
+
+				if( $request->input('add_frases') == 'on'){
+					$data['add_frases'] = true;
+				}
+
+
 				\Modules\MgPersonal\Entities\User::where('id', $request->input('id'))
-				->update([					
-						'ap_paterno' => ucwords( $request->input('ap_paterno') ),
-						'ap_materno' => ucwords( $request->input('ap_materno') ),
-						'password' => Hash::make( $request->input('password') ),
-						'email' => strtolower( $request->input('correo') ),
-						'name' => ucwords( $request->input('nombre') ),
-						'add_frases' => ( $request->input('add_frases') == 'on') ? true : false
-				]);
+				->update( $data );
 				$request->session()->flash('message', trans('mgpersonal::ui.flash.flash_create_personal'));
 				return Response(['msg' => 'success'], 200)->header('Content-Type', 'application/json');
 			}
