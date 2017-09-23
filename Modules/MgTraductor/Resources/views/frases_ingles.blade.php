@@ -66,7 +66,7 @@
 												<i class="ace-icon fa fa-pencil bigger-120"></i>
 											</a>		
 											
-											<a data-toggle="modal" data-target="#modal_delete_frase" data-id="{{ $frase->id }}" class="btn btn-xs btn-danger delete_id" title="Eliminar">
+											<a class="btn btn-xs btn-danger delete_id" data-toggle="modal" data-target="#modal_delete_frase" data-id="{{ $frase->id }}"  title="Eliminar">
 												<i class="ace-icon fa fa-trash-o bigger-120"></i>
 											</a>
 										</td>
