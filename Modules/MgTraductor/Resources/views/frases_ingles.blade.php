@@ -162,7 +162,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title " id="myModalLabel">Eliminar Frase</h4>
 			  </div>
-			  <form id="form_delete_frase" method="GET" action=""
+			  <form id="form_delete_frase" method="GET" action="">
 				  <img src="{{ asset('assets/dashboard/images/error/peligro.png') }}">
 				  {{ csrf_field() }}
 				  <div id="inputs"></div>
