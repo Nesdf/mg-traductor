@@ -221,7 +221,7 @@
 			});
 		});
 
-		$('.delete_id').on('click', function(){
+		$('.delete_id').click(function(){
 			 id = $( this ).data('id');
 			  $('#form_delete_frase').attr('action', '{{ url("mgtraductor/delete") }}/' + id);
 			  console.log('delete ID');
