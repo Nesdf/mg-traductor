@@ -66,7 +66,7 @@
 												<i class="ace-icon fa fa-pencil bigger-120"></i>
 											</a>		
 											
-											<a class="btn btn-xs btn-danger delete_id" data-toggle="modal" data-target="#modal_delete_frase" data-id="{{ $frase->id }}"  title="Eliminar">
+											<a class="btn btn-xs btn-danger delete_id" data-toggle="modal" data-target="#modal_delete_frase" data-id="{{ $frase->id }}" onclick="actionForm()"  title="Eliminar">
 												<i class="ace-icon fa fa-trash-o bigger-120"></i>
 											</a>
 										</td>
@@ -221,11 +221,17 @@
 			});
 		});
 
-		$('.delete_id').on('click', function(){
+		$('#modal_delete_frase').on('show.bs.modal', function(e) {    
+		    var id = $(e.relatedTarget).data().id;
+		    $('#form_delete_frase').attr('action', '{{ url("mgtraductor/delete") }}/' + id);
+		     //$(e.currentTarget).find('#lista').val(id);
+		});
+
+		/*$('.delete_id').on('click', function(){
 			var id = $( this ).data('id');
 			  $('#form_delete_frase').attr('action', '{{ url("mgtraductor/delete") }}/' + id);
 			  console.log('delete ID');
-		 });
+		 });*/
 	});
 
 </script>
