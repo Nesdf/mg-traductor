@@ -33,7 +33,7 @@
 					<form role="form" id="form_traductor">
 						{{ csrf_field() }}
 						<textarea name="texto_ingles" id="texto1" rows="15"></textarea>	<br>					
-						<button type="submit" class="btn btn-primary">Doble click para traducir </button>
+						<button type="submit" class="btn btn-primary">Click para traducir </button>
 					</form>
 					<!-- div.table-responsive -->
 
