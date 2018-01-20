@@ -12,9 +12,9 @@ class FraseEnIngles extends Model
     public static function relationInglesEspanol()
     {
     	return \DB::select(
-    		'SELECT frases_ingles.id, frases_ingles.frase, COUNT(frases_espanol.*) as total
+    		'SELECT frases_ingles.id, frases_ingles.frase, COUNT(frases_espanol.*) AS total
 				FROM frases_ingles 
-				inner join frases_espanol on frases_ingles.id = frases_espanol.frase_ingles_id 
+				INNER JOIN frases_espanol ON frases_ingles.id = frases_espanol.frase_ingles_id 
 				GROUP BY frases_ingles.id, frases_ingles.frase' 
     		);
     }
@@ -29,7 +29,20 @@ class FraseEnIngles extends Model
 
     public static function totalDeFrases()
     {
-        return \DB::select(\DB::raw('select frases_ingles.frase as ingles, count(frases_espanol.*)  as total from frases_ingles inner join frases_espanol on frases_ingles.id = frases_espanol.frase_ingles_id group by frases_ingles.frase'));
+        return \DB::select(\DB::raw(
+            'SELECT frases_ingles.frase AS ingles, COUNT(frases_espanol.*)  AS total 
+                FROM frases_ingles 
+                INNER JOIN frases_espanol ON frases_ingles.id = frases_espanol.frase_ingles_id 
+                GROUP BY frases_ingles.frase'));
+    }
+
+    public static function dbFrases()
+    {
+        return \DB::select(\DB::raw(
+            'SELECT frases_ingles.frase AS ingles, COUNT(frases_espanol.*)  AS total 
+                FROM frases_ingles 
+                INNER JOIN frases_espanol ON frases_ingles.id = frases_espanol.frase_ingles_id 
+                GROUP BY frases_ingles.frase'));
     }
 
     public static function oneFrase($frase_ingles)

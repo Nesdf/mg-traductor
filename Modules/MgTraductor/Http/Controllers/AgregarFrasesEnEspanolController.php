@@ -130,8 +130,10 @@ class AgregarFrasesEnEspanolController extends Controller
         $this->texto = $request->input('texto_ingles');        
         $traduccionDeFrases = \Modules\MgTraductor\Entities\FraseEnIngles::totalDeFrases();
 
-        foreach ($traduccionDeFrases as $key => $value) {
+        foreach ($traduccionDeFrases as  $value) {
            #str_replace($value->espanol, $value->ingles, $request->input('texto_ingles'));
+           $dbFrases =  \Modules\MgTraductor\Entities\FraseEnIngles::dbFrases();
+           dd($dbFrases);
            if($value->total == 1){
                 $array_ingles = array();
                 array_push($array_ingles, strtolower($value->ingles)); // Todas las palabras en minúsculas
